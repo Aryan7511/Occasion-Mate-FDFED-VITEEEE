@@ -8,21 +8,31 @@ import {
   invalidPathHandler,
 } from "./middleware/errorHandler.js";
 import morgan from "morgan";
+import helmet from "helmet";
+import bodyParser from "body-parser";
+import cors from "cors"
 
 // Routes
 import userRoutes from "./routes/userRoutes.js";
+import vendorRoutes from "./routes/vendorRoutes.js";
+import venueRoutes from "./routes/venueRoutes.js";
 
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(morgan("tiny"));
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(morgan("common"));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Server is running...");
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/vendors", vendorRoutes);
+app.use("/api/venues", venueRoutes);
 
 
 //Error Hanlder middleware

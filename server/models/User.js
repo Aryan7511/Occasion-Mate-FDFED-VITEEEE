@@ -5,9 +5,21 @@ import jwt from "jsonwebtoken";
 const UserSchema = new Schema(
   {
     avatar: { type: String, default: "" },
-    firstName: { type: String, required: true, min: 2, max: 50 },
-    lastName: { type: String, required: true, min: 2, max: 50 },
-    email: { type: String, required: true, unique: true },
+    firstName: {
+      type: String,
+      lowercase: true,
+      required: true,
+      min: 2,
+      max: 50,
+    },
+    lastName: {
+      type: String,
+      lowercase: true,
+      required: true,
+      min: 2,
+      max: 50,
+    },
+    email: { type: String, lowercase: true, required: true, unique: true },
     password: { type: String, required: true },
     isAdmin: { type: Boolean, default: false },
   },

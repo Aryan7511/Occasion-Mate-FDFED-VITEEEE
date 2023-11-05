@@ -2,8 +2,7 @@ import User from "../models/User.js";
 
 const registerUser = async (req, res, next) => {
   try {
-    const { firstName, lastName, password } = req.body;
-    const email = req.body.email.toLowerCase();
+    const { email,firstName, lastName, password } = req.body;
     // check whether the user exists or not
     let user = await User.findOne({ email });
     if (user) {
@@ -35,7 +34,7 @@ const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    let user = await User.findOne({ email: email.toLowerCase() });
+    let user = await User.findOne({ email: email });
 
     if (!user) {
       throw new Error("Email not found");
